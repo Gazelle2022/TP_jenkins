@@ -1,25 +1,48 @@
 pipeline {
+
     agent any
+
+    tools {
+        nodejs 'NodeJS-25.2.1'
+    }
 
     stages {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/Gazelle2022/TP_jenkins'
             }
         }
 
         stage('Build') {
             steps {
+                echo 'Installation des dépendances'
                 sh 'npm install'
             }
         }
 
         stage('Test') {
             steps {
+                echo 'Exécution des tests JavaScript'
                 sh 'npm test'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                echo 'Déploiement simulé'
+                sh 'echo Déploiement simulé'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline exécuté avec succès'
+        }
+        failure {
+            echo 'Pipeline échoué'
+        }
     }
 }
-

@@ -1,6 +1,10 @@
 pipeline {
 
     agent any
+    
+        triggers {
+        githubPush()
+    }
 
     tools {
         nodejs 'NodeJS-25.2.1'

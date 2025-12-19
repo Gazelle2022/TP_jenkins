@@ -19,4 +19,3 @@ test('division', () => {
 test('division par zéro', () => {
   expect(() => calc.division(5, 0)).toThrow();
 });
-git 

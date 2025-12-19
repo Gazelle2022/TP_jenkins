@@ -1,21 +1,14 @@
 pipeline {
-
     agent any
     
-        triggers {
+    triggers {
         githubPush()
     }
 
-    tools {
-        nodejs 'NodeJS-25.2.1'
-    }
-
     stages {
-
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Gazelle2022/TP_jenkins.git'
+                git branch: 'main', url: 'https://github.com/Gazelle2022/TP_jenkins.git'
             }
         }
 

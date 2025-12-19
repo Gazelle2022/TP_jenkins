@@ -1,4 +1,4 @@
-const calc = require('./calculatrice');
+const calc = require('../src/calculatrice');
 
 test('addition', () => {
   expect(calc.addition(2, 3)).toBe(5);

@@ -18,21 +18,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Installation des dépendances'
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Exécution des tests JavaScript'
-                sh 'npm test'
+                bat 'npm test'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Déploiement simulé'
-                sh 'echo Déploiement simulé'
+                bat 'echo Déploiement simulé'
             }
         }
     }

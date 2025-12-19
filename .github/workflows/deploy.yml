@@ -1,19 +1,21 @@
-name: Deploy
+name: CI/CD Pipeline
 
 on:
-  workflow_run:
-    workflows: ["Test"]
-    types: [completed]
+  push:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
 
+  build:
+    uses: ./.github/workflows/build.yml
+
+  test:
+    needs: build
+    uses: ./.github/workflows/test.yml
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
     steps:
-      - name: Deploy application
-        run: |
-          echo "=================================="
-          echo " Deploy JavaScript App 🚀"
-          echo " Deployment successful ✅"
-          echo "=================================="
+      - name: Deploy
+        run: echo "🚀 Deploying application"

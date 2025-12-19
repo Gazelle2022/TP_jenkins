@@ -1,42 +1,36 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-permissions:
-  contents: read
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  build:
-    uses: ./.github/workflows/build.yml
+    build:
+        uses: ./.github/workflows/build.yml
 
-  test:
-    needs: build
-    uses: ./.github/workflows/test.yml
+    test:
+        needs: build
+        uses: ./.github/workflows/test.yml
 
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
+    deploy:
+        needs: test
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node-build
-          path: ./artifacts
+        steps:
+            - name: Download artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: calcula-nodejs-artifact
+                  path: ./artifacts
 
-      - name: Display artifacts
-        run: ls -la ./artifacts
+            - name: Display artifacts
+              run: ls -la ./artifacts
 
-      - name: Deploy application
-        run: |
-          echo "🚀 Deploying Node.js application"
-          # Example:
-          # pm2 restart app
-          # scp -r artifacts/* user@server:/var/www/app
-          echo "✅ Deployment complete"
+            - name: Deploy application
+              run: |
+                  echo "Deploying application..."
+                  echo "Deployment complete!"

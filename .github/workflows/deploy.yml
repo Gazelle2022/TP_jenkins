@@ -1,36 +1,41 @@
 name: CI/CD Pipeline
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    build:
-        uses: ./.github/workflows/build.yml
+  build:
+    uses: ./.github/workflows/build.yml
 
-    test:
-        needs: build
-        uses: ./.github/workflows/test.yml
+  test:
+    needs: build
+    uses: ./.github/workflows/test.yml
 
-    deploy:
-        needs: test
-        runs-on: ubuntu-latest
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Download artifact
-              uses: actions/download-artifact@v4
-              with:
-                  name: calcula-nodejs-artifact
-                  path: ./artifacts
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            - name: Display artifacts
-              run: ls -la ./artifacts
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: calculator-build
+          path: ./artifacts
 
-            - name: Deploy application
-              run: |
-                  echo "Deploying application..."
-                  echo "Deployment complete!"
+      - name: Display artifacts
+        run: ls -la ./artifacts
+
+      - name: Deploy application
+        run: |
+          echo "Deploying JavaScript Calculator..."
+          echo "Files deployed:"
+          ls -la ./artifacts
+          echo "Deployment complete!"

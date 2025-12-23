@@ -2,11 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
@@ -21,21 +19,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifact
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: calculator-build
           path: ./artifacts
 
-      - name: Display artifacts
+      - name: Show files
         run: ls -la ./artifacts
 
-      - name: Deploy application
-        run: |
-          echo "Deploying JavaScript Calculator..."
-          echo "Files deployed:"
-          ls -la ./artifacts
-          echo "Deployment complete!"
+      - name: Deploy
+        run: echo "Deployment done"
